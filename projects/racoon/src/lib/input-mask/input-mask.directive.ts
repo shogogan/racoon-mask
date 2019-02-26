@@ -1,9 +1,10 @@
-import {Directive, ElementRef, HostListener, Input, NgModule, OnInit, Renderer2} from "@angular/core";
+import { Directive, ElementRef, HostListener, Input, NgModule, OnInit } from "@angular/core";
 
 @Directive({
     selector: "[rInputMask]"
 })
 export class InputMaskDirective implements OnInit {
+    private oldValue: string;
 
     constructor(private el: ElementRef) {
     }
@@ -26,8 +27,8 @@ export class InputMaskDirective implements OnInit {
 
     @HostListener("input")
     onInput() {
+        this.oldValue = this.value;
         this.value = this.el.nativeElement.value;
-        console.log(this.el.nativeElement);
         this.maskValue();
     }
 
@@ -35,6 +36,8 @@ export class InputMaskDirective implements OnInit {
     }
 
     public maskValue() {
+
+        // TODO Adjust caret positioning
         let maskedValue = "";
         let dif = 0;
         let caretDif = 0;
@@ -52,10 +55,16 @@ export class InputMaskDirective implements OnInit {
             } else if (this.mask.charAt(i + dif) === "9") {
                 if (InputMaskDirective.isNumeric(this.value.charAt(i))) {
                     maskedValue += this.value.charAt(i);
+                } else {
+                    this.value = this.value.substring(0, i) + this.value.substring(i + 1);
+                    i--;
                 }
             } else if (this.mask.charAt(i + dif) === "A") {
                 if (InputMaskDirective.isAlpha(this.value.charAt(i - dif))) {
                     maskedValue += this.value.charAt(i);
+                } else {
+                    this.value = this.value.substring(0, i) + this.value.substring(i + 1);
+                    i--;
                 }
             } else if (this.mask.charAt(i + dif) !== this.value.charAt(i) && maskedValue.charAt(i + dif) !== this.mask.charAt(i + dif)) {
                 maskedValue += this.mask.charAt(i + dif);
@@ -65,13 +74,18 @@ export class InputMaskDirective implements OnInit {
                 maskedValue += this.mask.charAt(i + dif);
             }
         }
-        this.value = maskedValue;
-        let caretPos = this.getCaretPos() + dif - caretDif;
-        while (caretPos < this.value.length &&
-        !InputMaskDirective.isNumeric(this.value.charAt(caretPos)) &&
-        !InputMaskDirective.isAlpha(this.value.charAt(caretPos))) {
-            caretPos++;
+        let caretPos = this.getCaretPos();
+        if (this.oldValue !== maskedValue) {
+            caretPos = caretPos + dif - caretDif;
+            while (caretPos < this.value.length &&
+            !InputMaskDirective.isNumeric(this.value.charAt(caretPos)) &&
+            !InputMaskDirective.isAlpha(this.value.charAt(caretPos))) {
+                caretPos++;
+            }
+        } else {
+            caretPos--;
         }
+        this.value = maskedValue;
         this.el.nativeElement.value = this.value;
         this.el.nativeElement.selectionStart = caretPos;
         this.el.nativeElement.selectionEnd = caretPos;
