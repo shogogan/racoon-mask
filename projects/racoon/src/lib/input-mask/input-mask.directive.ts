@@ -46,32 +46,34 @@ export class InputMaskDirective implements OnInit {
             if (this.value.length === i) {
                 break;
             }
-            if (!InputMaskDirective.isAlpha(this.value.charAt(i))
-                && !InputMaskDirective.isNumeric(this.value.charAt(i))
-                && this.value.charAt(i) !== this.mask.charAt(i + dif)) {
+            const maskChar = this.mask.charAt(i + dif);
+            const valueChar = this.value.charAt(i);
+            if ((maskChar !== "A" || !InputMaskDirective.isAlpha(valueChar))
+                && (maskChar !== "9" || !InputMaskDirective.isNumeric(valueChar))
+                && valueChar !== maskChar) {
                 this.value = this.value.substring(0, i) + this.value.substring(i + 1);
                 i--;
                 caretDif++;
-            } else if (this.mask.charAt(i + dif) === "9") {
-                if (InputMaskDirective.isNumeric(this.value.charAt(i))) {
-                    maskedValue += this.value.charAt(i);
+            } else if (maskChar === "9") {
+                if (InputMaskDirective.isNumeric(valueChar)) {
+                    maskedValue += valueChar;
                 } else {
                     this.value = this.value.substring(0, i) + this.value.substring(i + 1);
                     i--;
                 }
-            } else if (this.mask.charAt(i + dif) === "A") {
+            } else if (maskChar === "A") {
                 if (InputMaskDirective.isAlpha(this.value.charAt(i - dif))) {
-                    maskedValue += this.value.charAt(i);
+                    maskedValue += valueChar;
                 } else {
                     this.value = this.value.substring(0, i) + this.value.substring(i + 1);
                     i--;
                 }
-            } else if (this.mask.charAt(i + dif) !== this.value.charAt(i) && maskedValue.charAt(i + dif) !== this.mask.charAt(i + dif)) {
-                maskedValue += this.mask.charAt(i + dif);
+            } else if (maskChar !== valueChar && maskedValue.charAt(i + dif) !== maskChar) {
+                maskedValue += maskChar;
                 dif++;
                 i--;
             } else {
-                maskedValue += this.mask.charAt(i + dif);
+                maskedValue += maskChar;
             }
         }
         let caretPos = this.getCaretPos();
