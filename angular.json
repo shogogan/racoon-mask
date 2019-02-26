@@ -134,6 +134,41 @@
           }
         }
       }
+    },
+    "racoon": {
+      "root": "projects/racoon",
+      "sourceRoot": "projects/racoon/src",
+      "projectType": "library",
+      "prefix": "um",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/racoon/tsconfig.lib.json",
+            "project": "projects/racoon/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/racoon/src/test.ts",
+            "tsConfig": "projects/racoon/tsconfig.spec.json",
+            "karmaConfig": "projects/racoon/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/racoon/tsconfig.lib.json",
+              "projects/racoon/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "racoonMask"

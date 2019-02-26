@@ -17,6 +17,14 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "racoon": [
+        "dist/racoon"
+      ],
+      "racoon/*": [
+        "dist/racoon/*"
+      ]
+    }
   }
 }
