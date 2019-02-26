@@ -5,6 +5,7 @@ import { Directive, ElementRef, HostListener, Input, NgModule, OnInit } from "@a
 })
 export class InputMaskDirective implements OnInit {
     private oldValue: string;
+    private caretPos: number;
 
     constructor(private el: ElementRef) {
     }
@@ -36,20 +37,15 @@ export class InputMaskDirective implements OnInit {
     }
 
     public maskValue() {
-
-        // TODO Adjust caret positioning
         let maskedValue = "";
         let dif = 0;
         let caretDif = 0;
 
-        for (let i = 0; i < this.mask.length; i++) {
-            if (this.value.length === i) {
-                break;
-            }
+        for (let i = 0; i < this.mask.length && this.value.length !== i; i++) {
             const maskChar = this.mask.charAt(i + dif);
             const valueChar = this.value.charAt(i);
-            if ((maskChar !== "A" || !InputMaskDirective.isAlpha(valueChar))
-                && (maskChar !== "9" || !InputMaskDirective.isNumeric(valueChar))
+            if (!InputMaskDirective.isAlpha(valueChar)
+                && !InputMaskDirective.isNumeric(valueChar)
                 && valueChar !== maskChar) {
                 this.value = this.value.substring(0, i) + this.value.substring(i + 1);
                 i--;
@@ -76,21 +72,32 @@ export class InputMaskDirective implements OnInit {
                 maskedValue += maskChar;
             }
         }
+
+        this.caretPos = this.getUpdatedCaretPos(maskedValue);
+        this.value = maskedValue;
+        this.updateInput();
+    }
+
+    private updateInput() {
+        this.el.nativeElement.value = this.value;
+        this.el.nativeElement.selectionStart = this.caretPos;
+        this.el.nativeElement.selectionEnd = this.caretPos;
+    }
+
+    private getUpdatedCaretPos(maskedValue: string) {
         let caretPos = this.getCaretPos();
-        if (this.oldValue !== maskedValue) {
-            caretPos = caretPos + dif - caretDif;
+        if (caretPos === this.el.nativeElement.value.length) {
+            caretPos = maskedValue.length;
+        } else if (this.oldValue !== maskedValue) {
             while (caretPos < this.value.length &&
-            !InputMaskDirective.isNumeric(this.value.charAt(caretPos)) &&
-            !InputMaskDirective.isAlpha(this.value.charAt(caretPos))) {
+            this.mask.charAt(caretPos) !== "9" &&
+            this.mask.charAt(caretPos) !== "A") {
                 caretPos++;
             }
         } else {
             caretPos--;
         }
-        this.value = maskedValue;
-        this.el.nativeElement.value = this.value;
-        this.el.nativeElement.selectionStart = caretPos;
-        this.el.nativeElement.selectionEnd = caretPos;
+        return caretPos;
     }
 
     public getCaretPos() {
