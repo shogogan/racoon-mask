@@ -1,19 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 
 @Component({
-  selector: 'um-racoon',
-  template: `
-    <p>
-      racoon works!
-    </p>
-  `,
-  styles: []
+    selector: "r-racoon",
+    template: `
+        <p>
+            racoon works!
+        </p>
+    `,
+    styles: []
 })
 export class RacoonComponent implements OnInit {
 
-  constructor() { }
+    constructor() {
+    }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+    }
 
 }

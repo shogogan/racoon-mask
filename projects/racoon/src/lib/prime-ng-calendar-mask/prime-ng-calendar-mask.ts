@@ -1,5 +1,5 @@
-import {AfterViewChecked, Directive, ElementRef, HostListener, NgModule, OnInit} from "@angular/core";
-import {Calendar, CalendarModule} from "primeng/primeng";
+import { AfterViewChecked, Directive, ElementRef, HostListener, NgModule, OnInit } from "@angular/core";
+import { Calendar, CalendarModule } from "primeng/primeng";
 
 @Directive({
     selector: "[rPCalendarMask]",
