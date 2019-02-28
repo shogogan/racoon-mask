@@ -19,7 +19,7 @@ For the `p-calendar` usage:
 
 It will take the date format and set the mask using it.
 
-We still do not support th full length of the date format, just the mostly used by now.
+We still do not support the full length of the date format available, just the mostly used by now.
 
 | Date Format Part | Supported |
 | :--------------- | :-------- | 
