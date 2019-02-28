@@ -6,11 +6,12 @@ import { Calendar, CalendarModule } from "primeng/primeng";
 
 })
 export class PrimeNgCalendarMaskDirective implements OnInit, AfterViewChecked {
-    private firstTime: boolean = true;
 
     constructor(private el: ElementRef, private host: Calendar) {
 
     }
+
+    private firstTime = true;
 
     private oldValue: string;
 
