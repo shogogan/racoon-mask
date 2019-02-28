@@ -30,6 +30,9 @@ export class InputMaskDirective implements OnInit {
     onInput() {
         this.oldValue = this.value;
         this.value = this.el.nativeElement.value;
+        if (!this.value) {
+            return;
+        }
         this.maskValue();
     }
 

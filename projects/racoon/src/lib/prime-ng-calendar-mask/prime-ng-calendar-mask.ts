@@ -68,6 +68,9 @@ export class PrimeNgCalendarMaskDirective implements OnInit, AfterViewChecked {
         }
         this.oldValue = this.value;
         this.value = this.input.nativeElement.value;
+        if (!this.value) {
+            return;
+        }
         this.maskValue();
     }
 
