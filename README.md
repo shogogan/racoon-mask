@@ -1,4 +1,5 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![npm version](https://badge.fury.io/js/racoon-lib.svg)](https://badge.fury.io/js/racoon-lib)
 # Racoon
 
 This is a library for masking, it is still on the initial states.
