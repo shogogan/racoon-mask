@@ -121,8 +121,9 @@ export class PrimeNgCalendarMaskDirective implements OnInit, AfterViewChecked {
         this.input.nativeElement.selectionEnd = this.caretPos;
         if (this.value.length === this.mask.length) {
             const date = this.host.parseValueFromString(this.value);
-
-            this.host.updateModel(date);
+            if (this.host.isSelectable(date.getDate(), date.getMonth(), date.getFullYear(), false)) {
+                this.host.updateModel(date);
+            }
         }
     }
 
