@@ -4,14 +4,19 @@ import { Directive, ElementRef, HostListener, Input, NgModule, OnInit } from "@a
     selector: "[rInputMask]"
 })
 export class InputMaskDirective implements OnInit {
-    private oldValue: string;
-    private caretPos: number;
 
     constructor(private el: ElementRef) {
     }
 
-    @Input("rInputMask")
-    mask: string;
+    @Input() slotChar = "_";
+
+    @Input() showPlaceholder = false;
+
+    @Input("rInputMask") mask: string;
+
+    private oldValue: string;
+
+    private caretPos: number;
 
     public value: string;
 
@@ -35,6 +40,7 @@ export class InputMaskDirective implements OnInit {
         }
         this.maskValue();
     }
+
 
     ngOnInit(): void {
     }
@@ -76,6 +82,11 @@ export class InputMaskDirective implements OnInit {
             }
         }
 
+        if (this.showPlaceholder) {
+            maskedValue = this.fillWithPlaceholder(maskedValue);
+            this.oldValue = this.fillWithPlaceholder(this.oldValue);
+        }
+
         this.caretPos = this.getUpdatedCaretPos(maskedValue);
         this.value = maskedValue;
         this.updateInput();
@@ -101,6 +112,16 @@ export class InputMaskDirective implements OnInit {
             caretPos--;
         }
         return caretPos;
+    }
+
+    private fillWithPlaceholder(value: string): string {
+        if (!value) {
+            return value;
+        }
+        let mask = this.mask.replace(/[9A]/g, this.slotChar);
+        mask = mask.substring(value.length, mask.length);
+        value = value + mask;
+        return value;
     }
 
     public getCaretPos() {

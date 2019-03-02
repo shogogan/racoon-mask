@@ -1,0 +1,33 @@
+<div>
+    <p>This is the showcase for the Crude input directive</p>
+
+    <p>By now it supports only Alpha or Numeric values.</p>
+
+    <p>Usage: &lt;input [rInputMask]="mask" /&gt;</p>
+
+    <p>Mask containing 9 or A to indicate what kind of character it will accept.
+        Anything else will be ignored and treated as part of the mask.</p>
+
+    <p>Examples:</p>
+
+    <p>Numerical Only</p>
+    <div>
+        <p><label for="date">Simple date mask</label></p>
+        <input id="date" rInputMask="99-99-9999" placeholder="99-99-9999"/>
+    </div>
+    <div>
+        <p><label for="cpf">CPF mask (Brazilian document)</label></p>
+        <input id="cpf" rInputMask="999.999.999-99" placeholder="999.999.999-99"/>
+    </div>
+    <div>
+        <p><label for="time">Time Mask</label></p>
+        <input id="time" rInputMask="99:99:99" placeholder="99:99:99"/>
+    </div>
+
+    <p>Alpha and Numeric</p>
+    <div>
+        <p><label for="date2">Date with month abbreviation</label></p>
+        <input id="date2" rInputMask="99 AAA 9999" placeholder="99 AAA 9999"/>
+    </div>
+
+</div>
