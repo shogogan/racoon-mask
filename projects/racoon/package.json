@@ -1,6 +1,6 @@
 {
-    "name": "racoon-lib",
-    "version": "0.0.8",
+    "name": "@uncannyminds/racoon-mask",
+    "version": "1.0.0",
     "peerDependencies": {
         "@angular/common": "^7.2.0",
         "@angular/core": "^7.2.0"

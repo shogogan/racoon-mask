@@ -1,0 +1,94 @@
+<div class="ui-fluid">
+    <div class="ui-g-12">
+        <h3>Without placeholder</h3>
+        <div class="ui-g-4">
+            <label>Date Only</label>
+            <div class="ui-g-12" style="background: #e3e3e3;">
+                &lt;p-calendar rPCalendarMask&gt;
+            </div>
+            <p-calendar class="ui-g-12 ui-g-nopad" rPCalendarMask></p-calendar>
+        </div>
+        <div class="ui-g-4">
+            <div class="ui-g-12 ui-g-nopad">
+                <label>Time Only</label>
+                <div class="ui-g-12" style="background: #e3e3e3;">
+                    &lt;p-calendar [timeOnly]="true" rPCalendarMask&gt;
+                </div>
+                <p-calendar class="ui-g-12 ui-g-nopad" [timeOnly]="true" rPCalendarMask></p-calendar>
+            </div>
+            <div class="ui-g-12 ui-g-nopad">
+                <label>Time Only with seconds</label>
+                <div class="ui-g-12" style="background: #e3e3e3;">
+                    &lt;p-calendar [timeOnly]="true" [showSeconds]="true" rPCalendarMask&gt;
+                </div>
+                <p-calendar class="ui-g-12 ui-g-nopad" [timeOnly]="true" [showSeconds]="true"
+                            rPCalendarMask></p-calendar>
+            </div>
+        </div>
+        <div class="ui-g-4">
+            <label>DateTime</label>
+            <div class="ui-g-12" style="background: #e3e3e3;">
+                &lt;p-calendar [showTime]="true" [showSeconds]="true" rPCalendarMask&gt;
+            </div>
+            <p-calendar class="ui-g-12 ui-g-nopad" [showTime]="true" [showSeconds]="true" rPCalendarMask></p-calendar>
+        </div>
+    </div>
+    <div class="ui-g-12">
+        <h3>With placeholder</h3>
+        <div class="ui-g-4">
+            <label>Date Only</label>
+            <div class="ui-g-12" style="background: #e3e3e3;">
+                &lt;p-calendar rPCalendarMask&gt;
+            </div>
+            <p-calendar class="ui-g-12 ui-g-nopad" [showPlaceholder]="true" rPCalendarMask></p-calendar>
+        </div>
+        <div class="ui-g-4">
+            <div class="ui-g-12 ui-g-nopad">
+                <label>Time Only</label>
+                <div class="ui-g-12" style="background: #e3e3e3;">
+                    &lt;p-calendar [showIcon]="true" [timeOnly]="true" [showPlaceholder]="true" rPCalendarMask&gt;
+                </div>
+                <p-calendar class="ui-g-12 ui-g-nopad" [showIcon]="true" [timeOnly]="true" [showPlaceholder]="true"
+                            rPCalendarMask></p-calendar>
+            </div>
+            <div class="ui-g-12 ui-g-nopad">
+                <label>Time Only with seconds</label>
+                <div class="ui-g-12" style="background: #e3e3e3;">
+                    &lt;p-calendar [timeOnly]="true" [showSeconds]="true" [showPlaceholder]="true" rPCalendarMask&gt;
+                </div>
+                <p-calendar class="ui-g-12 ui-g-nopad" [timeOnly]="true" [showSeconds]="true" [showPlaceholder]="true"
+                            rPCalendarMask></p-calendar>
+            </div>
+        </div>
+        <div class="ui-g-4">
+            <label>DateTime</label>
+            <div class="ui-g-12" style="background: #e3e3e3;">
+                &lt;p-calendar [showTime]="true" [showSeconds]="true" [showPlaceholder]="true" rPCalendarMask&gt;
+            </div>
+            <p-calendar class="ui-g-12 ui-g-nopad" [showTime]="true" [showSeconds]="true" [showPlaceholder]="true"
+                        rPCalendarMask></p-calendar>
+        </div>
+    </div>
+
+    <div class="ui-g-12">
+        <h3>With custom dateformats</h3>
+        <div class="ui-g-4">
+            <label>dd/mm/yy</label>
+            <div class="ui-g-12" style="background: #e3e3e3;">
+                &lt;p-calendar dateFormat="dd/mm/yy" [showPlaceholder]="true" rPCalendarMask&gt;
+            </div>
+            <p-calendar class="ui-g-12 ui-g-nopad" dateFormat="dd/mm/yy" [showPlaceholder]="true"
+                        rPCalendarMask></p-calendar>
+        </div>
+        <div class="ui-g-4">
+            <label>datetime with dd/mm/yyr</label>
+            <div class="ui-g-12" style="background: #e3e3e3;">
+                &lt;p-calendar class="ui-g-12 ui-g-nopad" [showTime]="true" [showSeconds]="true" dateFormat="dd/mm/yy"
+                [showPlaceholder]="true" rPCalendarMaskk&gt;
+            </div>
+            <p-calendar class="ui-g-12 ui-g-nopad" [showTime]="true" [showSeconds]="true" dateFormat="dd/mm/yy"
+                        [showPlaceholder]="true"
+                        rPCalendarMask></p-calendar>
+        </div>
+    </div>
+</div>

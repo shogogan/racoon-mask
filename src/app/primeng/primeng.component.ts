@@ -2,7 +2,11 @@ import { Component } from "@angular/core";
 
 @Component({
     selector: "app-primeng",
-    template: "<p>Primeng :D</p>"
+    templateUrl: "./primeng.component.html",
+    styleUrls: [
+        "./primeng.component.scss"
+    ]
+
 })
 export class PrimengComponent {
 

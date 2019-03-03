@@ -4,6 +4,7 @@ import { Directive, ElementRef, HostListener, Input, NgModule, OnInit } from "@a
     selector: "[rInputMask]"
 })
 export class InputMaskDirective implements OnInit {
+    private oldLength: number;
 
     constructor(private el: ElementRef) {
     }
@@ -48,17 +49,22 @@ export class InputMaskDirective implements OnInit {
     public maskValue() {
         let maskedValue = "";
         let dif = 0;
-        let caretDif = 0;
+        let foundPlaceholder = false;
 
         for (let i = 0; i < this.mask.length && this.value.length !== i; i++) {
             const maskChar = this.mask.charAt(i + dif);
             const valueChar = this.value.charAt(i);
+            if (this.showPlaceholder && valueChar === this.slotChar) {
+                if (foundPlaceholder) {
+                    break;
+                }
+                foundPlaceholder = true;
+            }
             if (!InputMaskDirective.isAlpha(valueChar)
                 && !InputMaskDirective.isNumeric(valueChar)
                 && valueChar !== maskChar) {
                 this.value = this.value.substring(0, i) + this.value.substring(i + 1);
                 i--;
-                caretDif++;
             } else if (maskChar === "9") {
                 if (InputMaskDirective.isNumeric(valueChar)) {
                     maskedValue += valueChar;
@@ -67,7 +73,7 @@ export class InputMaskDirective implements OnInit {
                     i--;
                 }
             } else if (maskChar === "A") {
-                if (InputMaskDirective.isAlpha(this.value.charAt(i - dif))) {
+                if (InputMaskDirective.isAlpha(this.value.charAt(i))) {
                     maskedValue += valueChar;
                 } else {
                     this.value = this.value.substring(0, i) + this.value.substring(i + 1);
@@ -81,7 +87,7 @@ export class InputMaskDirective implements OnInit {
                 maskedValue += maskChar;
             }
         }
-
+        this.oldLength = maskedValue.length;
         if (this.showPlaceholder) {
             maskedValue = this.fillWithPlaceholder(maskedValue);
             this.oldValue = this.fillWithPlaceholder(this.oldValue);
@@ -100,8 +106,8 @@ export class InputMaskDirective implements OnInit {
 
     private getUpdatedCaretPos(maskedValue: string) {
         let caretPos = this.getCaretPos();
-        if (caretPos === this.el.nativeElement.value.length) {
-            caretPos = maskedValue.length;
+        if (caretPos === this.el.nativeElement.value.length || caretPos === this.oldLength) {
+            caretPos = this.oldLength;
         } else if (this.oldValue !== maskedValue) {
             while (caretPos < this.value.length &&
             this.mask.charAt(caretPos) !== "9" &&
