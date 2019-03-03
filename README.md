@@ -6,8 +6,11 @@ This is a library for masking, it is still on the initial states.
 
 By now we support normal `input` and PrimeNG `p-calendar`
 
+`npm install racoon-mask --save`
 
 For the `input` usage:
+
+`InputMaskModule`
 
 `<input rInputMask='A99-99-99'/>`
 
@@ -15,6 +18,8 @@ For the `input` usage:
 
 
 For the `p-calendar` usage:
+
+`PrimeNgCalendarMaskModule`
 
 `<p-calendar rPCalendarMask></p-calendar>`
 
