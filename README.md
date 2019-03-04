@@ -51,3 +51,5 @@ We still do not support the full length of the date format available, just the m
 |Seconds           | Yes       |
 
 The Partially supported, only works with ONE digit
+
+It's recommended to use `showIcon=true` and `showOnFocus=false` due to display problemas on mobile devices (issue open on primeng)
