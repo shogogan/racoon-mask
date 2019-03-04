@@ -1,137 +1,31 @@
 import { Directive, ElementRef, HostListener, Input, NgModule, OnInit } from "@angular/core";
+import { MaskingBase } from "../masking-base/masking-base";
 
 @Directive({
     selector: "[rInputMask]"
 })
-export class InputMaskDirective implements OnInit {
-    private oldLength: number;
+export class InputMaskDirective extends MaskingBase{
 
     constructor(private el: ElementRef) {
+        super();
+        this._input = el;
     }
 
-    @Input() slotChar = "_";
-
-    @Input() showPlaceholder = false;
-
-    @Input("rInputMask") mask: string;
-
-    private oldValue: string;
-
-    private caretPos: number;
-
-    public value: string;
-
-    private static isNumeric(s: string) {
-        if (s === " ") {
-            return false;
-        }
-        return !isNaN(Number(s));
+    @Input() set slotChar(value: string) {
+        this._slotChar = value;
     }
 
-    private static isAlpha(s: string) {
-        return s.match(/^[a-z]+$/i) !== null;
+    @Input() set showPlaceholder(value: boolean) {
+        this._showPlaceholder = value;
+    }
+
+    @Input("rInputMask") set mask(value: string) {
+        this._mask = value;
     }
 
     @HostListener("input")
     onInput() {
-        this.oldValue = this.value;
-        this.value = this.el.nativeElement.value;
-        if (!this.value) {
-            return;
-        }
-        this.maskValue();
-    }
-
-
-    ngOnInit(): void {
-    }
-
-    public maskValue() {
-        let maskedValue = "";
-        let dif = 0;
-        let foundPlaceholder = false;
-
-        for (let i = 0; i < this.mask.length && this.value.length !== i; i++) {
-            const maskChar = this.mask.charAt(i + dif);
-            const valueChar = this.value.charAt(i);
-            if (this.showPlaceholder && valueChar === this.slotChar) {
-                if (foundPlaceholder) {
-                    break;
-                }
-                foundPlaceholder = true;
-            }
-            if (!InputMaskDirective.isAlpha(valueChar)
-                && !InputMaskDirective.isNumeric(valueChar)
-                && valueChar !== maskChar) {
-                this.value = this.value.substring(0, i) + this.value.substring(i + 1);
-                i--;
-            } else if (maskChar === "9") {
-                if (InputMaskDirective.isNumeric(valueChar)) {
-                    maskedValue += valueChar;
-                } else {
-                    this.value = this.value.substring(0, i) + this.value.substring(i + 1);
-                    i--;
-                }
-            } else if (maskChar === "A") {
-                if (InputMaskDirective.isAlpha(this.value.charAt(i))) {
-                    maskedValue += valueChar;
-                } else {
-                    this.value = this.value.substring(0, i) + this.value.substring(i + 1);
-                    i--;
-                }
-            } else if (maskChar !== valueChar && maskedValue.charAt(i + dif) !== maskChar) {
-                maskedValue += maskChar;
-                dif++;
-                i--;
-            } else {
-                maskedValue += maskChar;
-            }
-        }
-        this.oldLength = maskedValue.length;
-        if (this.showPlaceholder) {
-            maskedValue = this.fillWithPlaceholder(maskedValue);
-            this.oldValue = this.fillWithPlaceholder(this.oldValue);
-        }
-
-        this.caretPos = this.getUpdatedCaretPos(maskedValue);
-        this.value = maskedValue;
-        this.updateInput();
-    }
-
-    private updateInput() {
-        this.el.nativeElement.value = this.value;
-        this.el.nativeElement.selectionStart = this.caretPos;
-        this.el.nativeElement.selectionEnd = this.caretPos;
-    }
-
-    private getUpdatedCaretPos(maskedValue: string) {
-        let caretPos = this.getCaretPos();
-        if (caretPos === this.el.nativeElement.value.length || caretPos === this.oldLength) {
-            caretPos = this.oldLength;
-        } else if (this.oldValue !== maskedValue) {
-            while (caretPos < this.value.length &&
-            this.mask.charAt(caretPos) !== "9" &&
-            this.mask.charAt(caretPos) !== "A") {
-                caretPos++;
-            }
-        } else {
-            caretPos--;
-        }
-        return caretPos;
-    }
-
-    private fillWithPlaceholder(value: string): string {
-        if (!value) {
-            return value;
-        }
-        let mask = this.mask.replace(/[9A]/g, this.slotChar);
-        mask = mask.substring(value.length, mask.length);
-        value = value + mask;
-        return value;
-    }
-
-    public getCaretPos() {
-        return this.el.nativeElement.selectionStart;
+        this.checkValue();
     }
 }
 
