@@ -1,5 +1,5 @@
 {
-    "name": "@uncannyminds/racoon-mask",
+    "name": "racoon-mask",
     "version": "1.1.0",
     "peerDependencies": {
         "@angular/common": "^7.2.0",
