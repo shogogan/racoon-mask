@@ -149,14 +149,15 @@
                         rPCalendarMask></p-calendar>
         </div>
         <div class="ui-g-4 ui-lg-4 ui-md-6 ui-sm-12">
-            <label>datetime with dd/mm/yyr</label>
+            <label>dd/MM/yy with time and Custom date format</label>
             <div class="ui-g-12 code">
                 &lt;p-calendar class="ui-g-12 ui-g-nopad"
                 [showOnFocus]="false"
                 [showTime]="true"
                 [showIcon]="true"
                 [showSeconds]="true"
-                dateFormat="dd/mm/yy"
+                dateFormat="dd MM yy"
+                [customDateFormat]="'dd/mm/yy'"
                 [showPlaceholder]="true" rPCalendarMask&gt;
             </div>
             <p-calendar class="ui-g-12 ui-g-nopad"
@@ -164,8 +165,27 @@
                         [showTime]="true"
                         [showSeconds]="true"
                         [showIcon]="true"
-                        dateFormat="dd/mm/yy"
+                        dateFormat="dd MM yy"
+                        [customDateFormat]="'dd/mm/yy'"
                         [showPlaceholder]="true"
+                        rPCalendarMask></p-calendar>
+        </div>
+        <div class="ui-g-4 ui-lg-4 ui-md-6 ui-sm-12">
+            <label>dd/MM/yy with custom date format</label>
+            <div class="ui-g-12 code">
+                &lt;p-calendar
+                dateFormat="dd/MM/yy"
+                [customDateFormat]="'dd/mm/yy'"
+                [showPlaceholder]="true"
+                [showIcon]="true"
+                rPCalendarMask&gt;
+            </div>
+            <p-calendar class="ui-g-12 ui-g-nopad"
+                        dateFormat="dd/MM/yy"
+                        [customDateFormat]="'dd/mm/yy'"
+                        [showOnFocus]="false"
+                        [showPlaceholder]="true"
+                        [showIcon]="true"
                         rPCalendarMask></p-calendar>
         </div>
     </div>
