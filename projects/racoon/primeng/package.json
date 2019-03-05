@@ -1,12 +1,13 @@
 {
-    "name": "@uncannyminds/racoon-mask-primeng",
+    "name": "racoon-mask-primeng",
     "version": "1.1.0",
     "peerDependencies": {
         "@angular/common": "^7.2.0",
-        "@angular/core": "^7.2.0"
+        "@angular/core": "^7.2.0",
+        "primeng": "^7.0.5"
     },
     "dependencies": {
-        "@uncannyminds/racoon-mask-base": "^1.1.0"
+        "racoon-mask-base": "^1.1.0"
     },
     "author": {
         "email": "shogogan@gmail.com",

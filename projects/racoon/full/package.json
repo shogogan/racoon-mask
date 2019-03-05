@@ -7,7 +7,7 @@
         "primeng": "^7.0.5"
     },
     "dependencies": {
-        "@uncannyminds/racoon-mask-base": "^1.1.0"
+        "racoon-mask-base": "^1.1.0"
     },
     "author": {
         "email": "shogogan@gmail.com",

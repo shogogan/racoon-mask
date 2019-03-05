@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 import { PrimengComponent } from "./primeng/primeng.component";
-import { CrudeComponent } from "./crude/crude.component";
+import { CrudeComponent } from "./raw/crude.component";
 import { MenuComponent } from "./menu/menu.component";
 
 
@@ -11,7 +11,7 @@ const routes = [
         component: MenuComponent
     },
     {
-        path: "crude",
+        path: "raw",
         component: CrudeComponent,
     },
     {

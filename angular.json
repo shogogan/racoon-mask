@@ -173,33 +173,33 @@
                 }
             }
         },
-        "racoon-crude": {
-            "root": "projects/racoon/crude",
-            "sourceRoot": "projects/racoon/crude/src",
+        "racoon-raw": {
+            "root": "projects/racoon/raw",
+            "sourceRoot": "projects/racoon/raw/src",
             "projectType": "library",
             "prefix": "um",
             "architect": {
                 "build": {
                     "builder": "@angular-devkit/build-ng-packagr:build",
                     "options": {
-                        "tsConfig": "projects/racoon/crude/tsconfig.lib.json",
-                        "project": "projects/racoon/crude/ng-package.json"
+                        "tsConfig": "projects/racoon/raw/tsconfig.lib.json",
+                        "project": "projects/racoon/raw/ng-package.json"
                     }
                 },
                 "test": {
                     "builder": "@angular-devkit/build-angular:karma",
                     "options": {
-                        "main": "projects/racoon/crude/src/test.ts",
-                        "tsConfig": "projects/racoon/crude/tsconfig.spec.json",
-                        "karmaConfig": "projects/racoon/crude/karma.conf.js"
+                        "main": "projects/racoon/raw/src/test.ts",
+                        "tsConfig": "projects/racoon/raw/tsconfig.spec.json",
+                        "karmaConfig": "projects/racoon/raw/karma.conf.js"
                     }
                 },
                 "lint": {
                     "builder": "@angular-devkit/build-angular:tslint",
                     "options": {
                         "tsConfig": [
-                            "projects/racoon/crude/tsconfig.lib.json",
-                            "projects/racoon/crude/tsconfig.spec.json"
+                            "projects/racoon/raw/tsconfig.lib.json",
+                            "projects/racoon/raw/tsconfig.spec.json"
                         ],
                         "exclude": [
                             "**/node_modules/**"

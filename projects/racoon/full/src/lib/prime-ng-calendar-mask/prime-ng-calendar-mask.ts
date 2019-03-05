@@ -1,6 +1,6 @@
 import { AfterViewChecked, Directive, ElementRef, HostListener, Input, NgModule, OnInit, Renderer2 } from "@angular/core";
 import { Calendar, CalendarModule } from "primeng/primeng";
-import { MaskingBase } from "@uncannyminds/racoon-mask-base";
+import { MaskingBase } from "racoon-mask-base";
 
 @Directive({
     selector: "p-calendar[rPCalendarMask]",

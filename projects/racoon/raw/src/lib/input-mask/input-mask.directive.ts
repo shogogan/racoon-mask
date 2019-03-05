@@ -1,15 +1,19 @@
 import { Directive, ElementRef, HostListener, Input, NgModule } from "@angular/core";
-import { MaskingBase } from "@uncannyminds/racoon-mask-base";
+import { MaskingBase } from "racoon-mask-base";
 
 
 @Directive({
     selector: "[rInputMask]"
 })
-export class InputMaskDirective extends MaskingBase{
+export class InputMaskDirective extends MaskingBase {
 
     constructor(private el: ElementRef) {
         super();
         this._input = el;
+    }
+
+    @Input() set(input: ElementRef) {
+        this._input = input;
     }
 
     @Input() set slotChar(value: string) {
@@ -28,6 +32,7 @@ export class InputMaskDirective extends MaskingBase{
     onInput() {
         this.checkValue();
     }
+
 }
 
 @NgModule({
