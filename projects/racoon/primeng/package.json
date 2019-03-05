@@ -1,0 +1,19 @@
+{
+    "name": "@uncannyminds/racoon-mask-primeng",
+    "version": "1.1.0",
+    "peerDependencies": {
+        "@angular/common": "^7.2.0",
+        "@angular/core": "^7.2.0"
+    },
+    "dependencies": {
+        "@uncannyminds/racoon-mask-base": "^1.1.0"
+    },
+    "author": {
+        "email": "shogogan@gmail.com",
+        "name": "Victor Homem Heck"
+    },
+    "license": "MIT",
+    "publishConfig": {
+        "access": "public"
+    }
+}
