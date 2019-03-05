@@ -1,5 +1,11 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![npm version](https://badge.fury.io/js/racoon-mask.svg)](https://badge.fury.io/js/racoon-mask)
+
+[![npm version(Full)](https://badge.fury.io/js/racoon-mask.svg)](https://badge.fury.io/js/racoon-mask) (Full version) `racoon-mask`
+
+[![npm version(Crude)](https://badge.fury.io/js/%40uncannyminds%2Fracoon-mask-crude.svg)](https://badge.fury.io/js/%40uncannyminds%2Fracoon-mask-crude) (Crude Only) `@uncannyminds/racoon-mask-crude`
+
+[![npm version](https://badge.fury.io/js/%40uncannyminds%2Fracoon-mask-primeng.svg)](https://badge.fury.io/js/%40uncannyminds%2Fracoon-mask-primeng) (PrimeNG CalendarMask only) `@uncannyminds/racoon-mask-primeng`
+
 # Racoon
 
 This is a library for masking, it is still on the initial states.
@@ -55,3 +61,5 @@ The Partially supported, only works with ONE digit
 It's recommended to use `showIcon=true` and `showOnFocus=false` due to display problemas on mobile devices (issue open on primeng)
 
 You can add a custom date format using `customDateFormat`, this format will set the format only for the input, letting you choose the visual dateFormat as you wish
+
+
