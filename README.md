@@ -1,5 +1,12 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![npm version](https://badge.fury.io/js/racoon-mask.svg)](https://badge.fury.io/js/racoon-mask)
+
+[![npm version(Full)](https://badge.fury.io/js/racoon-mask.svg)](https://badge.fury.io/js/racoon-mask) (Full version)
+
+[![npm version(Crude)](https://badge.fury.io/js/%40uncannyminds%2Fracoon-mask-crude.svg)](https://badge.fury.io/js/%40uncannyminds%2Fracoon-mask-crude) (Crude Only)
+
+[![npm version](https://badge.fury.io/js/%40uncannyminds%2Fracoon-mask-primeng.svg)](https://badge.fury.io/js/%40uncannyminds%2Fracoon-mask-primeng) (PrimeNG CalendarMask only)
+
+
 # Racoon
 
 This is a library for masking, it is still on the initial states.
