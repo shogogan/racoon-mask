@@ -1,6 +1,7 @@
 import { Directive, ElementRef, HostListener, Input, NgModule } from "@angular/core";
 import { MaskingBase } from "racoon-mask-base";
 
+
 @Directive({
     selector: "[rInputMask]"
 })
@@ -8,7 +9,11 @@ export class InputMaskDirective extends MaskingBase {
 
     constructor(private el: ElementRef) {
         super();
-        this._input = el;
+        this._input = el.nativeElement;
+    }
+
+    @Input() set(input: ElementRef) {
+        this._input = input.nativeElement;
     }
 
     @Input() set slotChar(value: string) {
@@ -27,6 +32,7 @@ export class InputMaskDirective extends MaskingBase {
     onInput() {
         this.checkValue();
     }
+
 }
 
 @NgModule({

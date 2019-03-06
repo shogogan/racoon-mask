@@ -21,7 +21,10 @@
     </div>
     <div>
         <p><label for="time">Time Mask</label></p>
-        <input id="time" rInputMask="99:99:99" placeholder="99:99:99"/>
+        <input id="time" [(ngModel)]="timeModel" rInputMask="99:99:99" placeholder="99:99:99"/>
+
+        <p>Model:</p>
+        <p>{{ timeModel | json}}</p>
     </div>
 
     <p>Alpha and Numeric</p>

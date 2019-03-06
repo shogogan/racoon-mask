@@ -1,13 +1,16 @@
-import { AfterViewChecked, Directive, ElementRef, HostListener, Input, NgModule, OnInit, Renderer2 } from "@angular/core";
+import { AfterViewChecked, Directive, ElementRef, HostListener, Input, NgModule, OnDestroy, OnInit, Renderer2 } from "@angular/core";
 import { Calendar, CalendarModule } from "primeng/primeng";
 import { MaskingBase } from "racoon-mask-base";
+import { Subscription } from "rxjs";
 
 
 @Directive({
     selector: "p-calendar[rPCalendarMask]",
 
 })
-export class PrimeNgCalendarMaskDirective extends MaskingBase implements OnInit, AfterViewChecked {
+export class PrimeNgCalendarMaskDirective extends MaskingBase implements OnInit, AfterViewChecked, OnDestroy {
+    private selectSubscriber: Subscription;
+    private listener: () => void;
     constructor(private el: ElementRef, private host: Calendar, private renderer: Renderer2) {
         super();
     }
@@ -25,7 +28,7 @@ export class PrimeNgCalendarMaskDirective extends MaskingBase implements OnInit,
     private firstTime = true;
 
     public ngOnInit(): void {
-        this._input = this.host.inputfieldViewChild;
+        this._input = this.host.inputfieldViewChild.nativeElement;
         this.setMask();
     }
 
@@ -58,17 +61,17 @@ export class PrimeNgCalendarMaskDirective extends MaskingBase implements OnInit,
     @HostListener("input")
     private onInput() {
         if (this._input === null) {
-            this._input = this.host.inputfieldViewChild;
+            this._input = this.host.inputfieldViewChild.nativeElement;
         }
         this.checkValue();
     }
 
     private onFocus() {
         if (this.customDateFormat && this.host.value) {
-            this._input.nativeElement.value = this.value;
+            this._input.value = this.value;
             this.checkValue();
-            this._input.nativeElement.selectionStart = this.value.length;
-            this._input.nativeElement.selectionEnd = this.value.length;
+            this._input.selectionStart = this.value.length;
+            this._input.selectionEnd = this.value.length;
         }
     }
 
@@ -108,13 +111,13 @@ export class PrimeNgCalendarMaskDirective extends MaskingBase implements OnInit,
     ngAfterViewChecked(): void {
         if (this.firstTime && this.host && this.host.inputfieldViewChild) {
             this.firstTime = false;
-            this._input = this.host.inputfieldViewChild;
-            this._input.nativeElement.type = "tel";
+            this._input = this.host.inputfieldViewChild.nativeElement;
+            this._input.type = "tel";
             this.setMask();
-            this.renderer.listen(this._input.nativeElement, "focus", () => {
+            this.listener = this.renderer.listen(this._input, "focus", () => {
                 this.onFocus();
             });
-            this.host.onSelect.subscribe((value) => {
+            this.selectSubscriber = this.host.onSelect.subscribe((value) => {
                 this.onSelect(value);
             });
         }
@@ -134,6 +137,11 @@ export class PrimeNgCalendarMaskDirective extends MaskingBase implements OnInit,
             }
             this.value = formattedValue;
         }
+    }
+
+    ngOnDestroy(): void {
+        this.listener();
+        this.selectSubscriber.unsubscribe();
     }
 }
 

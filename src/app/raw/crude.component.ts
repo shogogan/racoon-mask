@@ -5,5 +5,6 @@ import { Component } from "@angular/core";
     templateUrl: "./crude.component.html"
 })
 export class CrudeComponent {
+    timeModel: any;
 
 }

@@ -9,11 +9,11 @@ export class InputMaskDirective extends MaskingBase {
 
     constructor(private el: ElementRef) {
         super();
-        this._input = el;
+        this._input = el.nativeElement;
     }
 
     @Input() set(input: ElementRef) {
-        this._input = input;
+        this._input = input.nativeElement;
     }
 
     @Input() set slotChar(value: string) {

@@ -9,13 +9,14 @@ export class MaskingBase {
 
     public _mask = "";
 
-    public _input: ElementRef;
+    public _input: any;
 
     private oldValue: string;
 
     private caretPos: number;
 
     public value: string;
+    private update: boolean;
 
     private static isNumeric(s: string) {
         if (s === " ") {
@@ -30,8 +31,12 @@ export class MaskingBase {
 
 
     public checkValue() {
+        if(this.update){
+            this.update = false;
+            return;
+        }
         this.oldValue = this.value;
-        this.value = this._input.nativeElement.value;
+        this.value = this._input.value;
         if (!this.value) {
             return;
         }
@@ -92,14 +97,16 @@ export class MaskingBase {
     }
 
     public updateInput() {
-        this._input.nativeElement.value = this.value;
-        this._input.nativeElement.selectionStart = this.caretPos;
-        this._input.nativeElement.selectionEnd = this.caretPos;
+        this._input.value = this.value;
+        this._input.selectionStart = this.caretPos;
+        this._input.selectionEnd = this.caretPos;
+        this.update = true;
+        this._input.dispatchEvent(new Event("input"));
     }
 
     private getUpdatedCaretPos(maskedValue: string) {
         let caretPos = this.getCaretPos();
-        if (caretPos === this._input.nativeElement.value.length || caretPos === this.oldLength) {
+        if (caretPos === this._input.value.length || caretPos === this.oldLength) {
             caretPos = this.oldLength;
         } else if (this.oldValue !== maskedValue) {
             while (caretPos < this.value.length &&
@@ -124,6 +131,6 @@ export class MaskingBase {
     }
 
     public getCaretPos() {
-        return this._input.nativeElement.selectionStart;
+        return this._input.selectionStart;
     }
 }
