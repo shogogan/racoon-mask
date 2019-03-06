@@ -2,9 +2,9 @@
 
 [![npm version(Full)](https://badge.fury.io/js/racoon-mask.svg)](https://badge.fury.io/js/racoon-mask) (Full version) `racoon-mask`
 
-[![npm version(Crude)](https://badge.fury.io/js/%40uncannyminds%2Fracoon-mask-crude.svg)](https://badge.fury.io/js/%40uncannyminds%2Fracoon-mask-crude) (Crude Only) `@uncannyminds/racoon-mask-crude`
+[![npm version(Crude)](https://badge.fury.io/js/racoon-mask-crude.svg)](https://badge.fury.io/js/racoon-mask-crude) (Crude Only) `racoon-mask-crude`
 
-[![npm version](https://badge.fury.io/js/%40uncannyminds%2Fracoon-mask-primeng.svg)](https://badge.fury.io/js/%40uncannyminds%2Fracoon-mask-primeng) (PrimeNG CalendarMask only) `@uncannyminds/racoon-mask-primeng`
+[![npm version](https://badge.fury.io/js/racoon-mask-primeng.svg)](https://badge.fury.io/js/racoon-mask-primeng) (PrimeNG CalendarMask only) `racoon-mask-primeng`
 
 # Racoon
 
