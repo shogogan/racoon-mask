@@ -6,13 +6,14 @@ import { MaskingBase } from "racoon-mask-base";
     selector: "[rInputMask]"
 })
 export class InputMaskDirective extends MaskingBase {
+    private update: boolean;
 
-    constructor(private el: ElementRef) {
+    constructor(public el: ElementRef) {
         super();
         this._input = el.nativeElement;
     }
 
-    @Input() set(input: ElementRef) {
+    @Input() set input(input: ElementRef) {
         this._input = input.nativeElement;
     }
 
@@ -30,7 +31,17 @@ export class InputMaskDirective extends MaskingBase {
 
     @HostListener("input")
     onInput() {
+        if (this.update) {
+            this.update = false;
+            return;
+        }
         this.checkValue();
+    }
+
+    updateInput(): void {
+        super.updateInput();
+        this.update = true;
+        this._input.dispatchEvent(new Event("input"));
     }
 
 }

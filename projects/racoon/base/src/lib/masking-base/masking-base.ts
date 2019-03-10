@@ -1,22 +1,19 @@
-import { ElementRef } from "@angular/core";
-
 export class MaskingBase {
     private oldLength: number;
-
-    public _slotChar = "_";
-
-    public _showPlaceholder = false;
-
-    public _mask = "";
-
-    public _input: any;
 
     private oldValue: string;
 
     private caretPos: number;
 
+    public _mask = "";
+
+    public _slotChar = "_";
+
+    public _showPlaceholder = false;
+
+    public _input: any;
+
     public value: string;
-    private update: boolean;
 
     private static isNumeric(s: string) {
         if (s === " ") {
@@ -31,10 +28,6 @@ export class MaskingBase {
 
 
     public checkValue() {
-        if(this.update){
-            this.update = false;
-            return;
-        }
         this.oldValue = this.value;
         this.value = this._input.value;
         if (!this.value) {
@@ -100,8 +93,6 @@ export class MaskingBase {
         this._input.value = this.value;
         this._input.selectionStart = this.caretPos;
         this._input.selectionEnd = this.caretPos;
-        this.update = true;
-        this._input.dispatchEvent(new Event("input"));
     }
 
     private getUpdatedCaretPos(maskedValue: string) {

@@ -1,4 +1,4 @@
-import { AfterViewChecked, Directive, ElementRef, HostListener, Input, NgModule, OnDestroy, OnInit, Renderer2 } from "@angular/core";
+import { AfterViewChecked, Directive, ElementRef, HostListener, Input, NgModule, OnDestroy, Renderer2 } from "@angular/core";
 import { Calendar, CalendarModule } from "primeng/primeng";
 import { MaskingBase } from "racoon-mask-base";
 import { Subscription } from "rxjs";
@@ -8,9 +8,10 @@ import { Subscription } from "rxjs";
     selector: "p-calendar[rPCalendarMask]",
 
 })
-export class PrimeNgCalendarMaskDirective extends MaskingBase implements OnInit, AfterViewChecked, OnDestroy {
+export class PrimeNgCalendarMaskDirective extends MaskingBase implements AfterViewChecked, OnDestroy {
     private selectSubscriber: Subscription;
     private listener: () => void;
+
     constructor(private el: ElementRef, private host: Calendar, private renderer: Renderer2) {
         super();
     }
@@ -26,11 +27,6 @@ export class PrimeNgCalendarMaskDirective extends MaskingBase implements OnInit,
     }
 
     private firstTime = true;
-
-    public ngOnInit(): void {
-        this._input = this.host.inputfieldViewChild.nativeElement;
-        this.setMask();
-    }
 
     private setMask() {
         this._mask = "";

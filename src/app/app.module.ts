@@ -8,9 +8,8 @@ import { CrudeComponent } from "./raw/crude.component";
 import { PrimengComponent } from "./primeng/primeng.component";
 import { AppRouting } from "./app.routing";
 import { MenuComponent } from "./menu/menu.component";
-import { PrimeNgCalendarMaskModule } from "racoon-mask";
 import { FormsModule } from "@angular/forms";
-import { InputMaskModule } from "racoon-mask";
+import { InputMaskModule, PrimeNgCalendarMaskModule } from "racoon-mask";
 
 
 @NgModule({
