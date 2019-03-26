@@ -38,6 +38,16 @@ export class InputMaskDirective extends MaskingBase {
         this.checkValue();
     }
 
+    @HostListener("blur")
+    onBlur() {
+        this.blurEvent();
+    }
+
+    @HostListener("focus")
+    onFocus() {
+        this.checkValue(true);
+    }
+
     updateInput(): void {
         super.updateInput();
         this.update = true;

@@ -15,6 +15,10 @@ export class MaskingBase {
 
     public value: string;
 
+    private focus: boolean;
+
+    private clear: boolean;
+
     private static isNumeric(s: string) {
         if (s === " ") {
             return false;
@@ -27,10 +31,11 @@ export class MaskingBase {
     }
 
 
-    public checkValue() {
+    public checkValue(onFocus = false) {
         this.oldValue = this.value;
         this.value = this._input.value;
-        if (!this.value) {
+        this.focus = onFocus;
+        if (!this.value && !this.focus) {
             return;
         }
         this.maskValue();
@@ -91,6 +96,9 @@ export class MaskingBase {
 
     public updateInput() {
         this._input.value = this.value;
+        if (this.focus && this.clear) {
+            this.caretPos = 0;
+        }
         this._input.selectionStart = this.caretPos;
         this._input.selectionEnd = this.caretPos;
     }
@@ -112,13 +120,23 @@ export class MaskingBase {
     }
 
     private fillWithPlaceholder(value: string): string {
-        if (!value) {
+        if (value === undefined || value === null) {
             return value;
+        }
+        if (!value) {
+            this.clear = true;
         }
         let mask = this._mask.replace(/[9A]/g, this._slotChar);
         mask = mask.substring(value.length, mask.length);
         value = value + mask;
         return value;
+    }
+
+    public blurEvent() {
+        if (this.value.indexOf(this._slotChar) !== -1) {
+            this.value = null;
+            this.updateInput();
+        }
     }
 
     public getCaretPos() {

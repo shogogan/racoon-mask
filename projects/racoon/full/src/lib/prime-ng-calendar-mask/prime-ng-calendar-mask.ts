@@ -62,13 +62,21 @@ export class PrimeNgCalendarMaskDirective extends MaskingBase implements AfterVi
         this.checkValue();
     }
 
+    @HostListener("blur")
+    onBlur() {
+        this.blurEvent();
+    }
+
+    @HostListener("focus")
     private onFocus() {
         if (this.customDateFormat && this.host.value) {
             this._input.value = this.value;
-            this.checkValue();
+            this.checkValue(true);
             this._input.selectionStart = this.value.length;
             this._input.selectionEnd = this.value.length;
+            return;
         }
+        this.checkValue(true);
     }
 
     public updateInput() {
@@ -76,7 +84,6 @@ export class PrimeNgCalendarMaskDirective extends MaskingBase implements AfterVi
         if (this.value.length === this._mask.length && this.value.indexOf(this._slotChar) === -1) {
             try {
                 if (!this.customDateFormat) {
-                    console.log(this.value);
                     const date = this.host.parseValueFromString(this.value);
                     if (this.host.isSelectable(date.getDate(), date.getMonth(), date.getFullYear(), false)) {
                         this.host.updateModel(date);
