@@ -46,6 +46,7 @@ export class MaskingBase {
         let maskedValue = "";
         let dif = 0;
         let foundPlaceholder = false;
+        this.value = this.removeMask(this.value);
 
         for (let i = 0; i < this._mask.length && this.value.length !== i; i++) {
             const maskChar = this._mask.charAt(i + dif);
@@ -94,17 +95,38 @@ export class MaskingBase {
         this.updateInput();
     }
 
+    public removeMask(value: string): string {
+        let finalValue = value;
+        const constChars = this._mask.replace(/[9A]/g, "");
+        const regexpSlotChar = new RegExp(this._slotChar, "g");
+        finalValue = finalValue.replace(regexpSlotChar, "");
+        for (const constCharsKey of constChars) {
+            const regExp = new RegExp(constCharsKey, "g");
+            finalValue = finalValue.replace(regExp, "");
+        }
+
+        return finalValue;
+    }
+
     public updateInput() {
         this._input.value = this.value;
         if (this.focus && this.clear) {
             this.caretPos = 0;
         }
-        this._input.selectionStart = this.caretPos;
-        this._input.selectionEnd = this.caretPos;
+        if (this.focus) {
+            setTimeout(() => {
+                this._input.selectionStart = this.caretPos;
+                this._input.selectionEnd = this.caretPos;
+            }, 0);
+        } else {
+            this._input.selectionStart = this.caretPos;
+            this._input.selectionEnd = this.caretPos;
+        }
     }
 
     private getUpdatedCaretPos(maskedValue: string) {
         let caretPos = this.getCaretPos();
+        const startCaretPos = caretPos;
         if (caretPos === this._input.value.length || caretPos === this.oldLength) {
             caretPos = this.oldLength;
         } else if (this.oldValue !== maskedValue) {
@@ -115,6 +137,9 @@ export class MaskingBase {
             }
         } else {
             caretPos--;
+        }
+        if (this._mask.charAt(caretPos - 1) !== "9" && this._mask.charAt(caretPos - 1) !== "A" && caretPos === startCaretPos) {
+            caretPos++;
         }
         return caretPos;
     }

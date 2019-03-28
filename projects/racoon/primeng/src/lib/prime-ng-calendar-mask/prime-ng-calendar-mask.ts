@@ -67,7 +67,6 @@ export class PrimeNgCalendarMaskDirective extends MaskingBase implements AfterVi
         this.blurEvent();
     }
 
-    @HostListener("focus")
     private onFocus() {
         if (this.customDateFormat && this.host.value) {
             this._input.value = this.value;
