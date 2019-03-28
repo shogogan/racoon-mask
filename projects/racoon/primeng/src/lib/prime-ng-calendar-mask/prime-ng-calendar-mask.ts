@@ -17,6 +17,7 @@ export class PrimeNgCalendarMaskDirective extends MaskingBase implements AfterVi
     }
 
     @Input() customDateFormat;
+    @Input() selectAllOnFocus = true;
 
     @Input() set slotChar(value: string) {
         this._slotChar = value;
@@ -71,8 +72,10 @@ export class PrimeNgCalendarMaskDirective extends MaskingBase implements AfterVi
         if (this.customDateFormat && this.host.value) {
             this._input.value = this.value;
             this.checkValue(true);
-            this._input.selectionStart = this.value.length;
-            this._input.selectionEnd = this.value.length;
+            if (!this.selectAllOnFocus) {
+                this._input.selectionStart = this.value.length;
+                this._input.selectionEnd = this.value.length;
+            }
             return;
         }
         this.checkValue(true);
@@ -107,6 +110,10 @@ export class PrimeNgCalendarMaskDirective extends MaskingBase implements AfterVi
             } catch (err) {
                 this.host.updateModel(null);
             }
+        }
+        if (this.selectAllOnFocus && this.focus) {
+            this._input.selectionStart = 0;
+            this._input.selectionEnd = this.value.length;
         }
     }
 

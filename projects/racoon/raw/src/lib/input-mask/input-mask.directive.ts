@@ -1,5 +1,6 @@
 import { Directive, ElementRef, HostListener, Input, NgModule } from "@angular/core";
-import { MaskingBase } from "racoon-mask-base";
+import { MaskingBase } from "../../../../base/src/lib/masking-base/masking-base";
+
 
 
 @Directive({

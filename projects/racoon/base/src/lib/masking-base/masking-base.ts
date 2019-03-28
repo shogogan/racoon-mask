@@ -15,7 +15,7 @@ export class MaskingBase {
 
     public value: string;
 
-    private focus: boolean;
+    public focus: boolean;
 
     private clear: boolean;
 
@@ -87,7 +87,7 @@ export class MaskingBase {
         this.oldLength = maskedValue.length;
         if (this._showPlaceholder) {
             maskedValue = this.fillWithPlaceholder(maskedValue);
-            this.oldValue = this.fillWithPlaceholder(this.oldValue);
+            this.oldValue = this.fillWithPlaceholder(this.oldValue, true);
         }
 
         this.caretPos = this.getUpdatedCaretPos(maskedValue);
@@ -112,8 +112,6 @@ export class MaskingBase {
         this._input.value = this.value;
         if (this.focus && this.clear) {
             this.caretPos = 0;
-        }
-        if (this.focus) {
             setTimeout(() => {
                 this._input.selectionStart = this.caretPos;
                 this._input.selectionEnd = this.caretPos;
@@ -144,12 +142,17 @@ export class MaskingBase {
         return caretPos;
     }
 
-    private fillWithPlaceholder(value: string): string {
+    private fillWithPlaceholder(value: string, oldValue = false): string {
         if (value === undefined || value === null) {
             return value;
         }
-        if (!value) {
-            this.clear = true;
+
+        if (!oldValue && this.focus) {
+            if (!value || value.length === 0) {
+                this.clear = true;
+            } else {
+                this.clear = false;
+            }
         }
         let mask = this._mask.replace(/[9A]/g, this._slotChar);
         mask = mask.substring(value.length, mask.length);
@@ -159,7 +162,7 @@ export class MaskingBase {
 
     public blurEvent() {
         if (this.value.indexOf(this._slotChar) !== -1) {
-            this.value = null;
+            this.value = "";
             this.updateInput();
         }
     }
