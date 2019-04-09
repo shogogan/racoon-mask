@@ -69,7 +69,7 @@ export class PrimeNgCalendarMaskDirective extends MaskingBase implements AfterVi
 
     private onFocus() {
         if (this.customDateFormat && this.host.value) {
-            this._input.value = this.value;
+            this._input._value = this.value;
             this.checkValue(true);
             this._input.selectionStart = this.value.length;
             this._input.selectionEnd = this.value.length;

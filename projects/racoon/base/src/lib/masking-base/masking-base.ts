@@ -13,7 +13,7 @@ export class MaskingBase {
 
     public _input: any;
 
-    public value: string;
+    public _value: string;
 
     public focus: boolean;
 
@@ -32,25 +32,22 @@ export class MaskingBase {
 
 
     public checkValue(onFocus = false) {
-        this.oldValue = this.value;
-        this.value = this._input.value;
+        this.oldValue = this._value;
+        this._value = this._input.value;
         this.focus = onFocus;
-        if (!this.value && !this.focus) {
+        if (!this._value && !this.focus) {
             return;
         }
         this.maskValue();
     }
 
-
-    public maskValue() {
+    public getMaskedValue(value: string = this._value, mask: string = this._mask): string {
         let maskedValue = "";
         let dif = 0;
         let foundPlaceholder = false;
-        this.value = this.removeMask(this.value);
-
-        for (let i = 0; i < this._mask.length && this.value.length !== i; i++) {
-            const maskChar = this._mask.charAt(i + dif);
-            const valueChar = this.value.charAt(i);
+        for (let i = 0; i < mask.length && value.length !== i; i++) {
+            const maskChar = mask.charAt(i + dif);
+            const valueChar = value.charAt(i);
             if (this._showPlaceholder && valueChar === this._slotChar) {
                 if (foundPlaceholder) {
                     break;
@@ -60,20 +57,20 @@ export class MaskingBase {
             if (!MaskingBase.isAlpha(valueChar)
                 && !MaskingBase.isNumeric(valueChar)
                 && valueChar !== maskChar) {
-                this.value = this.value.substring(0, i) + this.value.substring(i + 1);
+                value = value.substring(0, i) + value.substring(i + 1);
                 i--;
             } else if (maskChar === "9") {
                 if (MaskingBase.isNumeric(valueChar)) {
                     maskedValue += valueChar;
                 } else {
-                    this.value = this.value.substring(0, i) + this.value.substring(i + 1);
+                    value = value.substring(0, i) + value.substring(i + 1);
                     i--;
                 }
             } else if (maskChar === "A") {
-                if (MaskingBase.isAlpha(this.value.charAt(i))) {
+                if (MaskingBase.isAlpha(value.charAt(i))) {
                     maskedValue += valueChar;
                 } else {
-                    this.value = this.value.substring(0, i) + this.value.substring(i + 1);
+                    value = value.substring(0, i) + value.substring(i + 1);
                     i--;
                 }
             } else if (maskChar !== valueChar && maskedValue.charAt(i + dif) !== maskChar) {
@@ -84,6 +81,11 @@ export class MaskingBase {
                 maskedValue += maskChar;
             }
         }
+        return maskedValue;
+    }
+
+    public maskValue() {
+        let maskedValue = this.getMaskedValue();
         this.oldLength = maskedValue.length;
         if (this._showPlaceholder) {
             maskedValue = this.fillWithPlaceholder(maskedValue);
@@ -91,7 +93,7 @@ export class MaskingBase {
         }
 
         this.caretPos = this.getUpdatedCaretPos(maskedValue);
-        this.value = maskedValue;
+        this._value = maskedValue;
         this.updateInput();
     }
 
@@ -109,7 +111,7 @@ export class MaskingBase {
     }
 
     public updateInput() {
-        this._input.value = this.value;
+        this._input.value = this._value;
         if (this.focus && this.clear) {
             this.caretPos = 0;
             setTimeout(() => {
@@ -128,7 +130,7 @@ export class MaskingBase {
         if (caretPos === this._input.value.length || caretPos === this.oldLength) {
             caretPos = this.oldLength;
         } else if (this.oldValue !== maskedValue) {
-            while (caretPos < this.value.length &&
+            while (caretPos < this._value.length &&
             this._mask.charAt(caretPos) !== "9" &&
             this._mask.charAt(caretPos) !== "A") {
                 caretPos++;
@@ -161,8 +163,8 @@ export class MaskingBase {
     }
 
     public blurEvent() {
-        if (this.value.indexOf(this._slotChar) !== -1) {
-            this.value = "";
+        if (this._value.indexOf(this._slotChar) !== -1) {
+            this._value = "";
             this.updateInput();
         }
     }
