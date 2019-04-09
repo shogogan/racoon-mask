@@ -2,7 +2,6 @@ import { Directive, ElementRef, HostListener, Input, NgModule } from "@angular/c
 import { MaskingBase } from "../../../../base/src/lib/masking-base/masking-base";
 
 
-
 @Directive({
     selector: "[rInputMask]"
 })
@@ -27,11 +26,12 @@ export class InputMaskDirective extends MaskingBase {
     }
 
     @Input("rInputMask") set mask(value: string) {
-        this._mask = value;
+        this.setMasks(value);
     }
 
-    @HostListener("input")
-    onInput() {
+    @HostListener("input", ["$event"])
+    onInput($event: any) {
+        this._deleting = $event.inputType === "deleteContentBackward";
         if (this.update) {
             this.update = false;
             return;

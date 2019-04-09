@@ -1,7 +1,7 @@
 import { AfterViewChecked, Directive, ElementRef, HostListener, Input, NgModule, OnDestroy, Renderer2 } from "@angular/core";
 import { Calendar, CalendarModule } from "primeng/primeng";
-import { MaskingBase } from "racoon-mask-base";
 import { Subscription } from "rxjs";
+import { MaskingBase } from "../../../../base/src/lib/masking-base/masking-base";
 
 
 @Directive({
@@ -30,29 +30,30 @@ export class PrimeNgCalendarMaskDirective extends MaskingBase implements AfterVi
     private firstTime = true;
 
     private setMask() {
-        this._mask = "";
+        let mask = "";
         if (!this.host.timeOnly) {
             const dateFormat = this.customDateFormat || this.host.dateFormat;
             for (const dateFormatItem of dateFormat) {
                 if (dateFormatItem === "d" || dateFormatItem === "m" || dateFormatItem === "y") {
-                    this._mask += "9";
+                    mask += "9";
                     if (dateFormatItem === "y") {
-                        this._mask += "9";
+                        mask += "9";
                     }
                 } else {
-                    this._mask += dateFormatItem;
+                    mask += dateFormatItem;
                 }
             }
         }
         if (this.host.showTime || this.host.timeOnly) {
             if (!this.host.timeOnly) {
-                this._mask += " ";
+                mask += " ";
             }
-            this._mask += "99:99";
+            mask += "99:99";
             if (this.host.showSeconds) {
-                this._mask += ":99";
+                mask += ":99";
             }
         }
+        this.setMasks(mask);
     }
 
     @HostListener("input")
@@ -70,11 +71,11 @@ export class PrimeNgCalendarMaskDirective extends MaskingBase implements AfterVi
 
     private onFocus() {
         if (this.customDateFormat && this.host.value) {
-            this._input._value = this.value;
+            this._input._value = this._value;
             this.checkValue(true);
             if (!this.selectAllOnFocus) {
-                this._input.selectionStart = this.value.length;
-                this._input.selectionEnd = this.value.length;
+                this._input.selectionStart = this._value.length;
+                this._input.selectionEnd = this._value.length;
             }
             return;
         }
@@ -83,21 +84,21 @@ export class PrimeNgCalendarMaskDirective extends MaskingBase implements AfterVi
 
     public updateInput() {
         super.updateInput();
-        if (this.value.length === this._mask.length && this.value.indexOf(this._slotChar) === -1) {
+        if (this._value.length === this._masks[0].length && this._value.indexOf(this._slotChar) === -1) {
             try {
                 if (!this.customDateFormat) {
-                    const date = this.host.parseValueFromString(this.value);
+                    const date = this.host.parseValueFromString(this._value);
                     if (this.host.isSelectable(date.getDate(), date.getMonth(), date.getFullYear(), false)) {
                         this.host.updateModel(date);
                         this.host.updateUI();
                     }
                 } else {
                     let time;
-                    if (this.value.indexOf(" ") !== -1) {
-                        const sizeTrimmed = this.value.length - this.value.replace(/ /g, "").length;
-                        time = this.value.split(" ")[sizeTrimmed];
+                    if (this._value.indexOf(" ") !== -1) {
+                        const sizeTrimmed = this._value.length - this._value.replace(/ /g, "").length;
+                        time = this._value.split(" ")[sizeTrimmed];
                     }
-                    const date1 = this.host.parseDate(this.value, this.customDateFormat);
+                    const date1 = this.host.parseDate(this._value, this.customDateFormat);
                     if (this.host.isSelectable(date1.getDate(), date1.getMonth(), date1.getFullYear(), false)) {
                         if (time) {
                             const timeParts = time.split(":");
@@ -113,7 +114,7 @@ export class PrimeNgCalendarMaskDirective extends MaskingBase implements AfterVi
         }
         if (this.selectAllOnFocus && this.focus) {
             this._input.selectionStart = 0;
-            this._input.selectionEnd = this.value.length;
+            this._input.selectionEnd = this._value.length;
         }
     }
 
@@ -144,7 +145,7 @@ export class PrimeNgCalendarMaskDirective extends MaskingBase implements AfterVi
                     formattedValue += " " + this.host.formatTime(value);
                 }
             }
-            this.value = formattedValue;
+            this._value = formattedValue;
         }
     }
 

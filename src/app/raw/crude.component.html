@@ -13,15 +13,15 @@
     <p>Numerical Only</p>
     <div>
         <p><label for="date">Simple date mask</label></p>
-        <input id="date" rInputMask="99-99-9999" placeholder="99-99-9999"/>
+        <input id="date" rInputMask="99-99-9999" [showPlaceholder]="true"  placeholder="99-99-9999"/>
     </div>
     <div>
         <p><label for="cpf">CPF mask (Brazilian document)</label></p>
-        <input id="cpf" rInputMask="999.999.999-99" placeholder="999.999.999-99"/>
+        <input id="cpf" rInputMask="999.999.999-99" [showPlaceholder]="true"  placeholder="999.999.999-99"/>
     </div>
     <div>
         <p><label for="time">Time Mask</label></p>
-        <input id="time" [(ngModel)]="timeModel" [showPlaceholder]="true" rInputValueMask="99:99:99" placeholder="99:99:99"/>
+        <input id="time" [(ngModel)]="timeModel" [showPlaceholder]="true" rInputValueMask="99:99:99|999:999:999|9999:9999\|9999:9999" placeholder="99:99:99"/>
 
         <p>Model:</p>
         <p>{{ timeModel | json}}</p>

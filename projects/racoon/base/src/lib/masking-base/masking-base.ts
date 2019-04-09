@@ -5,7 +5,9 @@ export class MaskingBase {
 
     private caretPos: number;
 
-    public _mask = "";
+    private _mask = "";
+
+    public _masks = [];
 
     public _slotChar = "_";
 
@@ -14,6 +16,8 @@ export class MaskingBase {
     public _input: any;
 
     public _value: string;
+
+    public _deleting: boolean = false;
 
     public focus: boolean;
 
@@ -30,18 +34,26 @@ export class MaskingBase {
         return s.match(/^[a-z]+$/i) !== null;
     }
 
+    public setMasks(value: string) {
+        value = value.replace("\\|", "SEPARAT0R");
+        this._masks = value.split("|");
+        this._masks = this._masks.map((value1: string) => {
+            return value1.replace("SEPARAT0R", "|");
+        });
+    }
+
 
     public checkValue(onFocus = false) {
         this.oldValue = this._value;
         this._value = this._input.value;
         this.focus = onFocus;
-        if (!this._value && !this.focus) {
+        if (!this._value && !this.focus && !this._deleting) {
             return;
         }
         this.maskValue();
     }
 
-    public getMaskedValue(value: string = this._value, mask: string = this._mask): string {
+    public getMaskedValue(value: string = this._value, mask: string = this._masks[0]): string {
         let maskedValue = "";
         let dif = 0;
         let foundPlaceholder = false;
@@ -85,7 +97,33 @@ export class MaskingBase {
     }
 
     public maskValue() {
-        let maskedValue = this.getMaskedValue();
+        let maskedValue = "";
+
+        if (this._masks.length > 1) {
+            let stopFor = false;
+            this._masks.sort((mask1: string, mask2: string) => {
+                if (mask1.length < mask2.length) {
+                    return -1;
+                }
+                if (mask1.length > mask2.length) {
+                    return 1;
+                }
+                return 0;
+            }).forEach((mask, index) => {
+                if (stopFor) {
+                    return;
+                }
+                if (this.removeMask(this._value).length <= this.removeMask(mask).length || index === this._masks.length - 1) {
+                    maskedValue = this.getMaskedValue(this._value, mask);
+                    this._mask = mask;
+                    stopFor = true;
+                    return;
+                }
+            });
+        } else {
+            this._mask = this._masks[0];
+            maskedValue = this.getMaskedValue();
+        }
         this.oldLength = maskedValue.length;
         if (this._showPlaceholder) {
             maskedValue = this.fillWithPlaceholder(maskedValue);
@@ -102,11 +140,16 @@ export class MaskingBase {
         const constChars = this._mask.replace(/[9A]/g, "");
         const regexpSlotChar = new RegExp(this._slotChar, "g");
         finalValue = finalValue.replace(regexpSlotChar, "");
-        for (const constCharsKey of constChars) {
+        for (let constCharsKey of constChars) {
+            if (constCharsKey === "\\") {
+                constCharsKey = "\\\\";
+            }
+            if (constCharsKey === "|") {
+                constCharsKey = "\\|";
+            }
             const regExp = new RegExp(constCharsKey, "g");
             finalValue = finalValue.replace(regExp, "");
         }
-
         return finalValue;
     }
 
@@ -138,7 +181,9 @@ export class MaskingBase {
         } else {
             caretPos--;
         }
-        if (this._mask.charAt(caretPos - 1) !== "9" && this._mask.charAt(caretPos - 1) !== "A" && caretPos === startCaretPos) {
+        if (this._mask.charAt(caretPos - 1) !== "9" &&
+            this._mask.charAt(caretPos - 1) !== "A" &&
+            caretPos === startCaretPos && !this._deleting) {
             caretPos++;
         }
         return caretPos;

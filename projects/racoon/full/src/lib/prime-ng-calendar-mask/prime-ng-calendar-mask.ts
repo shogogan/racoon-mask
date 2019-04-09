@@ -29,29 +29,30 @@ export class PrimeNgCalendarMaskDirective extends MaskingBase implements AfterVi
     private firstTime = true;
 
     private setMask() {
-        this._mask = "";
+        let mask = "";
         if (!this.host.timeOnly) {
             const dateFormat = this.customDateFormat || this.host.dateFormat;
             for (const dateFormatItem of dateFormat) {
                 if (dateFormatItem === "d" || dateFormatItem === "m" || dateFormatItem === "y") {
-                    this._mask += "9";
+                    mask += "9";
                     if (dateFormatItem === "y") {
-                        this._mask += "9";
+                        mask += "9";
                     }
                 } else {
-                    this._mask += dateFormatItem;
+                    mask += dateFormatItem;
                 }
             }
         }
         if (this.host.showTime || this.host.timeOnly) {
             if (!this.host.timeOnly) {
-                this._mask += " ";
+                mask += " ";
             }
-            this._mask += "99:99";
+            mask += "99:99";
             if (this.host.showSeconds) {
-                this._mask += ":99";
+                mask += ":99";
             }
         }
+        this.setMasks(mask);
     }
 
     @HostListener("input")

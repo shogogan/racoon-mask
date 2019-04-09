@@ -50,11 +50,17 @@ export class InputValueMaskDirective extends MaskingBase implements ControlValue
     }
 
     @Input("rInputValueMask") set mask(value: string) {
-        this._mask = value;
+        this.setMasks(value);
     }
 
-    @HostListener("input")
-    onInput() {
+    @HostListener("reset")
+    onClear() {
+        this.checkValue();
+    }
+
+    @HostListener("input", ["$event"])
+    onInput($event: any) {
+        this._deleting = $event.inputType === "deleteContentBackward";
         if (this.update) {
             this.update = false;
             return;
