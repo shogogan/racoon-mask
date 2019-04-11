@@ -100,7 +100,8 @@ export class MaskingBase {
         const constChars = this._mask.replace(/[9A]/g, "");
         const regexpSlotChar = new RegExp(this._slotChar, "g");
         finalValue = finalValue.replace(regexpSlotChar, "");
-        for (const constCharsKey of constChars) {
+        for (let constCharsKey of constChars) {
+            constCharsKey = "\\" + constCharsKey;
             const regExp = new RegExp(constCharsKey, "g");
             finalValue = finalValue.replace(regExp, "");
         }
