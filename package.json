@@ -27,7 +27,7 @@
         "tslib": "^1.9.0",
         "zone.js": "~0.8.26",
         "racoon-mask": "1.1.6",
-        "racoon-mask-primeng": "1.1.5",
+        "racoon-mask-primeng": "1.1.7",
         "racoon-mask-raw": "1.1.5"
     },
     "devDependencies": {
