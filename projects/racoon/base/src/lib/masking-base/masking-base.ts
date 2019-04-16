@@ -17,6 +17,8 @@ export class MaskingBase {
 
     public focus: boolean;
 
+    public _overwriteOnInsert = false;
+
     private clear: boolean;
 
     private static isNumeric(s: string) {
@@ -32,8 +34,17 @@ export class MaskingBase {
 
 
     public checkValue(onFocus = false) {
+
         this.oldValue = this.value;
         this.value = this._input.value;
+
+        if (this._overwriteOnInsert && this._input.selectionStart < this._input.value.length && this.value !== this.oldValue) {
+            let selectionStart = this._input.selectionStart;
+            if (!MaskingBase.isAlpha(this.value.charAt(selectionStart)) && !MaskingBase.isNumeric(this.value.charAt(selectionStart))) {
+                selectionStart++;
+            }
+            this.value = this.value.slice(0, selectionStart) + this.value.slice(selectionStart + 1);
+        }
         this.focus = onFocus;
         if (!this.value && !this.focus) {
             return;

@@ -1,8 +1,7 @@
 import { AfterViewChecked, Directive, ElementRef, HostListener, Input, NgModule, OnDestroy, Renderer2 } from "@angular/core";
 import { Calendar, CalendarModule } from "primeng/primeng";
-import { MaskingBase } from "racoon-mask-base";
 import { Subscription } from "rxjs";
-
+import { MaskingBase } from "racoon-mask-base";
 
 @Directive({
     selector: "p-calendar[rPCalendarMask]",
@@ -25,6 +24,10 @@ export class PrimeNgCalendarMaskDirective extends MaskingBase implements AfterVi
 
     @Input() set showPlaceholder(value: boolean) {
         this._showPlaceholder = value;
+    }
+
+    @Input() set overwriteOnInsert(value: boolean) {
+        this._overwriteOnInsert = value;
     }
 
     private firstTime = true;

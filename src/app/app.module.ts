@@ -10,7 +10,7 @@ import { AppRouting } from "./app.routing";
 import { MenuComponent } from "./menu/menu.component";
 import { FormsModule } from "@angular/forms";
 import { InputMaskModule } from "../../projects/racoon/raw/src/lib/input-mask/input-mask.directive";
-import { PrimeNgCalendarMaskModule } from "../../projects/racoon/primeng/src/lib/prime-ng-calendar-mask/prime-ng-calendar-mask";
+import { PrimeNgCalendarMaskModule } from "racoon-mask-primeng";
 
 
 @NgModule({
