@@ -37,16 +37,16 @@ export class MaskingBase {
 
         this.oldValue = this.value;
         this.value = this._input.value;
+        this.focus = onFocus;
 
-        if (this._overwriteOnInsert && this._input.selectionStart < this._input.value.length) {
+        if (this._overwriteOnInsert && this._input.selectionStart < this._input.value.length && !this.focus) {
             let selectionStart = this._input.selectionStart;
             if (!MaskingBase.isAlpha(this.value.charAt(selectionStart)) && !MaskingBase.isNumeric(this.value.charAt(selectionStart))) {
                 selectionStart++;
             }
             this.value = this.value.slice(0, selectionStart) + this.value.slice(selectionStart + 1);
-        }
 
-        this.focus = onFocus;
+        }
         if (!this.value && !this.focus) {
             return;
         }
@@ -161,11 +161,7 @@ export class MaskingBase {
         }
 
         if (!oldValue && this.focus) {
-            if (!value || value.length === 0) {
-                this.clear = true;
-            } else {
-                this.clear = false;
-            }
+            this.clear = !value || value.length === 0;
         }
         let mask = this._mask.replace(/[9A]/g, this._slotChar);
         mask = mask.substring(value.length, mask.length);
