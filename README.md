@@ -1,8 +1,8 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-[![npm version(Full)](https://badge.fury.io/js/racoon-mask.svg)](https://badge.fury.io/js/racoon-mask) (Full version) `racoon-mask`
+[![npm version(Full)](https://badge.fury.io/js/racoon-mask.svg)](https://badge.fury.io/js/racoon-mask) (Full version) `racoon-mask` (OUTDATED)
 
-[![npm version(Raw)](https://badge.fury.io/js/racoon-mask-raw.svg)](https://badge.fury.io/js/racoon-mask-raw) (Raw Only) `racoon-mask-raw`
+[![npm version(Raw)](https://badge.fury.io/js/racoon-mask-raw.svg)](https://badge.fury.io/js/racoon-mask-raw) (Raw Only) `racoon-mask-raw` (OUTDATED)
 
 [![npm version](https://badge.fury.io/js/racoon-mask-primeng.svg)](https://badge.fury.io/js/racoon-mask-primeng) (PrimeNG CalendarMask only) `racoon-mask-primeng`
 
@@ -61,5 +61,7 @@ The Partially supported, only works with ONE digit
 It's recommended to use `showIcon=true` and `showOnFocus=false` due to display problemas on mobile devices (issue open on primeng)
 
 You can add a custom date format using `customDateFormat`, this format will set the format only for the input, letting you choose the visual dateFormat as you wish
+
+
 
 
