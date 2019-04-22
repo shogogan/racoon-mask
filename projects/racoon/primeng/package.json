@@ -1,13 +1,13 @@
 {
     "name": "racoon-mask-primeng",
-    "version": "1.1.9",
+    "version": "1.1.10",
     "peerDependencies": {
         "@angular/common": "^7.2.0",
         "@angular/core": "^7.2.0",
         "primeng": "^7.0.5"
     },
     "dependencies": {
-        "racoon-mask-base": "1.1.8"
+        "racoon-mask-base": "1.1.9"
     },
     "author": {
         "email": "shogogan@gmail.com",

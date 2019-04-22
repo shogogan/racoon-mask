@@ -140,14 +140,12 @@ export class MaskingBase {
         const startCaretPos = caretPos;
         if (caretPos === this._input.value.length || caretPos === this.oldLength) {
             caretPos = this.oldLength;
-        } else if (this.oldValue !== maskedValue) {
+        } else  {
             while (caretPos < this.value.length &&
             this._mask.charAt(caretPos) !== "9" &&
             this._mask.charAt(caretPos) !== "A") {
                 caretPos++;
             }
-        } else {
-            caretPos--;
         }
         if (this._mask.charAt(caretPos - 1) !== "9" && this._mask.charAt(caretPos - 1) !== "A" && caretPos === startCaretPos) {
             caretPos++;
