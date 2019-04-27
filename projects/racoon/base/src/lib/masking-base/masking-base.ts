@@ -32,13 +32,20 @@ export class MaskingBase {
         return s.match(/^[a-z]+$/i) !== null;
     }
 
-
     public checkValue(onFocus = false) {
 
         this.oldValue = this.value;
         this.value = this._input.value;
         this.focus = onFocus;
 
+        if (!this.focus && this.oldValue.length < this._input.value.length && !this.isInputKeyAcceptable()) {
+            this.caretPos = this._input.selectionStart;
+            this.value = this.oldValue;
+            this._input.value = this.oldValue;
+            this._input.selectionStart = this.caretPos - 1;
+            this._input.selectionEnd = this.caretPos - 1;
+            return;
+        }
         if (this._overwriteOnInsert && this._input.selectionStart < this._input.value.length && !this.focus) {
             let selectionStart = this._input.selectionStart;
             if (!MaskingBase.isAlpha(this.value.charAt(selectionStart)) && !MaskingBase.isNumeric(this.value.charAt(selectionStart))) {
@@ -53,6 +60,32 @@ export class MaskingBase {
         this.maskValue();
     }
 
+    private isInputKeyAcceptable(): boolean {
+        if (this._mask.charAt(this._input.selectionStart - 1) === "9"
+            && !MaskingBase.isNumeric(this._input.value.charAt(this._input.selectionStart - 1))) {
+            return false;
+        }
+        if (this._mask.charAt(this._input.selectionStart - 1) === "A"
+            && !MaskingBase.isAlpha(this._input.value.charAt(this._input.selectionStart - 1))) {
+            return false;
+        }
+        if (this.getConstChars().includes(this._mask.charAt(this._input.selectionStart - 1)) ) {
+            if (this._mask.charAt(this._input.selectionStart) === "9"
+                && !MaskingBase.isNumeric(this._input.value.charAt(this._input.selectionStart - 1))) {
+                return false;
+            }
+            if (this._mask.charAt(this._input.selectionStart) === "A"
+                && !MaskingBase.isAlpha(this._input.value.charAt(this._input.selectionStart - 1))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private getConstChars(): string[] {
+        const constChars = this._mask.replace(/[9A]/g, "").split("");
+        return constChars.filter((v, i, a) => a.indexOf(v) === i);
+    }
 
     public maskValue() {
         let maskedValue = "";
@@ -109,7 +142,7 @@ export class MaskingBase {
 
     public removeMask(value: string): string {
         let finalValue = value;
-        const constChars = this._mask.replace(/[9A]/g, "");
+        const constChars = this.getConstChars();
         const regexpSlotChar = new RegExp(this._slotChar, "g");
         finalValue = finalValue.replace(regexpSlotChar, "");
         for (let constCharsKey of constChars) {
@@ -140,10 +173,10 @@ export class MaskingBase {
         const startCaretPos = caretPos;
         if (caretPos === this._input.value.length || caretPos === this.oldLength) {
             caretPos = this.oldLength;
-        } else  {
+        } else {
             while (caretPos < this.value.length &&
-            this._mask.charAt(caretPos) !== "9" &&
-            this._mask.charAt(caretPos) !== "A") {
+                this._mask.charAt(caretPos) !== "9" &&
+                this._mask.charAt(caretPos) !== "A") {
                 caretPos++;
             }
         }

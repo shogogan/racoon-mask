@@ -1,11 +1,10 @@
 import { AfterViewChecked, Directive, ElementRef, HostListener, Input, NgModule, OnDestroy, Renderer2 } from "@angular/core";
 import { Calendar, CalendarModule } from "primeng/primeng";
 import { Subscription } from "rxjs";
-import { MaskingBase } from "racoon-mask-base";
+import { MaskingBase } from "../../../../base/src/lib/masking-base/masking-base";
 
 @Directive({
-    selector: "p-calendar[rPCalendarMask]",
-
+    selector: "p-calendar[rPCalendarMask]"
 })
 export class PrimeNgCalendarMaskDirective extends MaskingBase implements AfterViewChecked, OnDestroy {
     private selectSubscriber: Subscription;
