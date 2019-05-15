@@ -2,7 +2,7 @@ import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 
 import { AppComponent } from "./app.component";
-import { CalendarModule } from "primeng/primeng";
+import { CalendarModule } from "primeng/calendar";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { CrudeComponent } from "./raw/crude.component";
 import { PrimengComponent } from "./primeng/primeng.component";
