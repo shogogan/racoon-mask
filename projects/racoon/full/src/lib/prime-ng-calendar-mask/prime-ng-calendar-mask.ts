@@ -1,5 +1,5 @@
 import { AfterViewChecked, Directive, ElementRef, HostListener, Input, NgModule, OnDestroy, Renderer2 } from "@angular/core";
-import { Calendar, CalendarModule } from "primeng/primeng";
+import { Calendar, CalendarModule } from "primeng/calendar";
 import { MaskingBase } from "racoon-mask-base";
 import { Subscription } from "rxjs";
 
