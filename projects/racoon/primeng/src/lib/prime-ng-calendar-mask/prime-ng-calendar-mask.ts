@@ -58,7 +58,7 @@ export class PrimeNgCalendarMaskDirective extends MaskingBase implements AfterVi
     }
 
     @HostListener("input")
-    ssonInput() {
+    onInput() {
         if (this._input === null) {
             this._input = this.host.inputfieldViewChild.nativeElement;
         }
