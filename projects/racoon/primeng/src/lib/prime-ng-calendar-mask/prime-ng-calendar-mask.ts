@@ -1,7 +1,7 @@
 import { AfterViewChecked, Directive, ElementRef, HostListener, Input, NgModule, OnDestroy, Renderer2 } from "@angular/core";
 import { Calendar, CalendarModule } from "primeng/calendar";
 import { Subscription } from "rxjs";
-import { MaskingBase } from "../../../../base/src/lib/masking-base/masking-base";
+import { MaskingBase } from "racoon-mask-base";
 
 @Directive({
     selector: "p-calendar[rPCalendarMask]"
@@ -58,7 +58,7 @@ export class PrimeNgCalendarMaskDirective extends MaskingBase implements AfterVi
     }
 
     @HostListener("input")
-    private onInput() {
+    ssonInput() {
         if (this._input === null) {
             this._input = this.host.inputfieldViewChild.nativeElement;
         }
@@ -88,7 +88,7 @@ export class PrimeNgCalendarMaskDirective extends MaskingBase implements AfterVi
         if (this.value.length === this._mask.length && this.value.indexOf(this._slotChar) === -1) {
             try {
                 if (!this.customDateFormat) {
-                    const date = this.host.parseValueFromString(this.value);
+                    const date = this.host.parseValueFromString(this.value) as Date;
                     if (this.host.isSelectable(date.getDate(), date.getMonth(), date.getFullYear(), false)) {
                         this.host.updateModel(date);
                         this.host.updateUI();
